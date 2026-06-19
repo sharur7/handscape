@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Red-Handed — gesture playground</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <!-- Left: experiences column -->
+    <aside id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">🖐️</div>
+        <div class="brand-text">
+          <h1>Red-Handed</h1>
+          <p>caught red-handed &middot; gesture playground</p>
+        </div>
+      </div>
+      <nav id="experience-list"><!-- filled by JS --></nav>
+      <div class="sidebar-foot">
+        <span id="cam-status" class="dot-status">camera: idle</span>
+      </div>
+    </aside>
+
+    <!-- Right: the stage (two screens) -->
+    <main id="stage">
+      <section id="scene-panel" class="panel">
+        <div class="panel-head">
+          <span class="panel-title" id="scene-title">Interactive Scene</span>
+          <span class="panel-tag" id="scene-tag">—</span>
+        </div>
+        <div id="scene-mount" class="mount">
+          <div id="scene-cursor" class="hand-cursor"></div>
+          <div id="scene-hint" class="overlay-hint"></div>
+        </div>
+      </section>
+
+      <section id="cam-panel" class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Hand Tracking</span>
+          <span class="panel-tag" id="hand-tag">no hands</span>
+        </div>
+        <div id="cam-mount" class="mount">
+          <video id="cam-video" playsinline muted></video>
+          <canvas id="cam-overlay"></canvas>
+          <button id="enable-cam" class="enable-cam">▶ Enable camera</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
