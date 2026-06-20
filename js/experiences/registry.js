@@ -28,7 +28,6 @@ import { createStack } from "./stack.js";
 import { createTicTacToe } from "./tictactoe.js";
 import { createLightsaber } from "./lightsaber.js";
 import { createMaze } from "./maze.js";
-import { createCrumblePaper } from "./crumblepaper.js";
 import { createGunShoot } from "./gunshoot.js";
 import { createRPS } from "./rps.js";
 
@@ -87,10 +86,8 @@ export const EXPERIENCES = [
     info: "<b>Pinch</b> the pouch, pull back (aim line shown) and <b>release</b> to fling a stone and <b>pop the balloons</b>." },
   { id: "stack", name: "Tower Stack", tag: "pinch to drop · build up", icon: "🧱", status: "ready", create: createStack,
     info: "A block swings up top — <b>pinch</b> to drop it square onto the tower. Reach the FINISH line to win." },
-  { id: "maze", name: "Marble Maze", tag: "tilt to roll · 3 levels", icon: "🌀", status: "ready", create: createMaze,
-    info: "<b>Tilt your hand</b> to rotate the maze; gravity rolls the ball out the exit. 3 levels, each harder — the last is circular!" },
-  { id: "paper", name: "Paper Toss", tag: "crumple ×3 · toss in bin", icon: "🗑️", status: "ready", create: createCrumblePaper,
-    info: "<b>Pinch 3 times</b> to crumple the paper into a ball (it stays in your hand), then <b>flick your hand</b> to toss it in the dustbin." },
+  { id: "maze", name: "Marble Maze", tag: "tilt to roll · 2 mazes", icon: "🌀", status: "ready", create: createMaze,
+    info: "<b>Tilt your hand</b> to rotate the maze; gravity gently rolls the ball through the gaps. Two mazes — a serpentine, then a circular ring-maze (start in the centre, roll out)." },
   { id: "ttt", name: "Tic-Tac-Toe", tag: "2 players · pinch to place", icon: "⭕", status: "ready", create: createTicTacToe,
     info: "Two players take turns: hover a square and <b>pinch</b> to place your mark. Open palm to reset." },
   { id: "rps", name: "Rock Paper Scissors", tag: "beat the computer", icon: "✊", status: "ready", create: createRPS,

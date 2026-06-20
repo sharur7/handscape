@@ -91,7 +91,7 @@ export function createLightBulb(ctx) {
   let insertion = 1, posY = 0, vy = 0, prevRot = null;
   let mode = "idle";
   let chainStartY = 0, chainPullY = 0, refitOpen = 0, crashed = false;
-  const REMOVE_GAIN = 0.42;     // ~quarter turn fully unscrews it
+  const REMOVE_GAIN = 0.32;     // ~half a turn of twisting and it drops fast
   const SLIDE = 0.15;           // small slide out of the socket before it drops
 
   const v = new THREE.Vector3();
@@ -128,15 +128,18 @@ export function createLightBulb(ctx) {
           while (d > Math.PI) d -= Math.PI * 2;
           while (d < -Math.PI) d += Math.PI * 2;
           prevRot = cur.rotation;
-          bulbGroup.rotation.y += d;
-          insertion = clamp(insertion - Math.abs(d) * REMOVE_GAIN, 0, 1);
-          if (insertion <= 0.001) { mode = "removed"; lightOn = false; vy = 0; sfx.pop(); }
+          // only real TWISTING counts — ignore tiny jitter / pure up-down hand motion
+          if (Math.abs(d) > 0.04) {
+            bulbGroup.rotation.y += d;
+            insertion = clamp(insertion - Math.abs(d) * REMOVE_GAIN, 0, 1);
+            if (insertion <= 0.001) { mode = "removed"; lightOn = false; vy = 0; sfx.pop(); }
+          }
         } else mode = "idle";
       }
     }
 
     if (mode === "removed") {
-      vy -= 18 * dt; posY += vy * dt;          // straight drop
+      vy -= 22 * dt; posY += vy * dt;          // straight drop
       if (!crashed && posY < -4.5) { crashed = true; sfx.glass(); }
       bulbGroup.rotation.z += dt * 2.2; bulbGroup.rotation.x += dt * 1.1;
       glassMat.opacity = Math.max(0, glassMat.opacity - dt * 0.04);

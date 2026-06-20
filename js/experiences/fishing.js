@@ -33,7 +33,7 @@ export function createFishing(ctx) {
       const p = { x: hand.landmarks[9].x, y: hand.landmarks[9].y };
       hist.push(p); if (hist.length > 14) hist.shift();
       const cx = hist.reduce((s, q) => s + q.x, 0) / hist.length, cy = hist.reduce((s, q) => s + q.y, 0) / hist.length;
-      hookX += (cx - hookX) * Math.min(1, dt * 6);
+      hookX += (cx - hookX) * Math.min(1, dt * 4);
       if (hist.length >= 3) {
         const a = hist[hist.length - 2], b = hist[hist.length - 1];
         const rax = a.x - cx, ray = a.y - cy, rbx = b.x - cx, rby = b.y - cy;
@@ -45,8 +45,8 @@ export function createFishing(ctx) {
     } else hist = [];
 
     // gentle idle sink; CLOCKWISE circle reels up, ANTICLOCKWISE reels down
-    depth += 0.02 * dt;
-    if (Math.abs(winding) > 0.02) { depth -= winding * 0.16; reelGlow = 1; reelDir = winding > 0 ? 1 : -1; if (reelSnd <= 0) { sfx.tick(); reelSnd = 0.12; } }
+    depth += 0.015 * dt;
+    if (Math.abs(winding) > 0.02) { depth -= winding * 0.075; reelGlow = 1; reelDir = winding > 0 ? 1 : -1; if (reelSnd <= 0) { sfx.tick(); reelSnd = 0.12; } }
     depth = Math.max(top, Math.min(0.92, depth));
     const hx = hookX * W, hy = depth * H;
 

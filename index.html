@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Red-Handed — gesture playground</title>
+  <title>Handscape — gesture playground</title>
   <link rel="stylesheet" href="./css/styles.css" />
   <script type="importmap">
   {
@@ -15,15 +15,31 @@
   </script>
 </head>
 <body>
+  <div id="mobile-notice">
+    👋 Best on a <b>desktop/laptop</b> with a webcam — but feel free to look around here.
+    <button class="mn-close" id="mn-close" aria-label="dismiss">✕</button>
+  </div>
   <div id="app">
     <!-- Left: experiences column -->
     <aside id="sidebar">
       <div class="brand">
-        <div class="brand-mark">🖐️</div>
-        <div class="brand-text">
-          <h1>Red-Handed</h1>
-          <p>caught red-handed &middot; gesture playground</p>
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- loose line-art raised hand: four fingers + a thumb sweeping into the palm heel -->
+            <g stroke="#ffd60a" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19"   y1="24" x2="18.5" y2="11"/>
+              <line x1="24"   y1="24" x2="24"   y2="9"/>
+              <line x1="29"   y1="24" x2="29.5" y2="11"/>
+              <line x1="33.5" y1="25" x2="34.5" y2="14"/>
+              <path d="M13 21 C 10.5 26, 11.5 32, 17 35 C 23 38, 29 36, 33 31"/>
+            </g>
+          </svg>
         </div>
+        <div class="brand-text">
+          <h1>Handscape</h1>
+          <p>gestures &middot; play &middot; create</p>
+        </div>
+        <button id="menu-btn" aria-label="open games menu">☰</button>
       </div>
       <nav id="experience-list"><!-- filled by JS --></nav>
       <div class="sidebar-foot">
@@ -40,8 +56,8 @@
         </div>
         <div id="scene-mount" class="mount">
           <div id="scene-cursor" class="hand-cursor"></div>
-          <div id="scene-hint" class="overlay-hint"></div>
         </div>
+        <div id="scene-hint" class="overlay-hint"></div>
       </section>
 
       <section id="cam-panel" class="panel">

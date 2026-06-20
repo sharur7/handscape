@@ -34,7 +34,8 @@ export function createGunShoot(ctx) {
 
     for (const b of bullets) {
       b.px = b.x; b.py = b.y; b.x += b.vx * dt;
-      for (const c of cans) if (!c.down && b.x > c.x - c.w / 2 && b.x < c.x + c.w / 2 && b.y > c.y - c.h && b.y < c.y) { c.down = true; c.vx = -(180 + Math.random() * 140); c.vy = -150 - Math.random() * 120; c.vr = (Math.random() - 0.5) * 14; score++; b.dead = true; sfx.tink(); for (let i = 0; i < 8; i++) { const a = Math.random() * Math.PI * 2; chips.push({ x: c.x, y: c.y - c.h / 2, vx: Math.cos(a) * 150, vy: Math.sin(a) * 150, life: 0.5 }); } break; }
+      const lo = Math.min(b.px, b.x), hi = Math.max(b.px, b.x);   // swept span so a fast bullet can't skip a thin tin
+      for (const c of cans) if (!c.down && hi > c.x - c.w / 2 && lo < c.x + c.w / 2 && b.y > c.y - c.h && b.y < c.y) { c.down = true; c.vx = -(180 + Math.random() * 140); c.vy = -150 - Math.random() * 120; c.vr = (Math.random() - 0.5) * 14; score++; b.dead = true; sfx.tink(); for (let i = 0; i < 8; i++) { const a = Math.random() * Math.PI * 2; chips.push({ x: c.x, y: c.y - c.h / 2, vx: Math.cos(a) * 150, vy: Math.sin(a) * 150, life: 0.5 }); } break; }
     }
     bullets = bullets.filter(b => !b.dead && b.x > -50);
     for (const c of cans) if (c.down) { c.vy += G * dt; c.x += c.vx * dt; c.y += c.vy * dt; c.rot += c.vr * dt; }

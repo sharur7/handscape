@@ -84,7 +84,18 @@ function selectExperience(id) {
 
   document.querySelectorAll(".exp-card").forEach(c =>
     c.classList.toggle("active", c.dataset.id === id));
+
+  closeMenu();   // on mobile, picking a game closes the menu
 }
+
+// ---------- mobile games menu ----------
+const appEl = document.getElementById("app");
+const menuBtn = document.getElementById("menu-btn");
+function closeMenu() { appEl.classList.remove("menu-open"); if (menuBtn) menuBtn.textContent = "☰"; }
+menuBtn?.addEventListener("click", () => {
+  const open = appEl.classList.toggle("menu-open");
+  menuBtn.textContent = open ? "✕" : "☰";
+});
 
 // ---------- hand tracking ----------
 const tracker = new HandTracker();
@@ -157,3 +168,10 @@ new ResizeObserver(() => { if (active?.resize) active.resize(ctx.width, ctx.heig
 buildSidebar();
 selectExperience("lightbulb");   // show the scene right away (camera optional)
 requestAnimationFrame(frame);
+
+// dismiss the "best on desktop" mobile notice — and reclaim the space it reserved at the top
+document.getElementById("mn-close")?.addEventListener("click", () => {
+  const n = document.getElementById("mobile-notice"); if (n) n.style.display = "none";
+  document.getElementById("app")?.classList.add("notice-dismissed");
+  if (active?.resize) active.resize(ctx.width, ctx.height);   // let the game re-fit to the taller stage
+});

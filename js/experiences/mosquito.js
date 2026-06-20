@@ -82,15 +82,20 @@ export function createMosquito(ctx) {
 
 function drawSwatter(g, x, y, R, fist, fx, dpr) {
   g.save(); g.translate(x, y);
-  // handle
-  g.strokeStyle = "#8a909c"; g.lineWidth = 6 * dpr; g.beginPath(); g.moveTo(0, R * 0.8); g.lineTo(R * 0.7, R * 1.8); g.stroke();
-  // mesh head
-  const r = R * (fist ? 0.85 : 1);
-  g.fillStyle = fist ? "rgba(255,120,120,0.3)" : "rgba(106,209,255,0.18)"; g.beginPath(); g.arc(0, 0, r, 0, Math.PI * 2); g.fill();
-  g.strokeStyle = fist ? "#ff6a6a" : "#6ad1ff"; g.lineWidth = 3 * dpr; g.beginPath(); g.arc(0, 0, r, 0, Math.PI * 2); g.stroke();
-  g.strokeStyle = fist ? "rgba(255,120,120,0.5)" : "rgba(106,209,255,0.35)"; g.lineWidth = 1 * dpr;
-  for (let i = -2; i <= 2; i++) { g.beginPath(); g.moveTo(i * r * 0.4, -r * 0.9); g.lineTo(i * r * 0.4, r * 0.9); g.stroke(); g.beginPath(); g.moveTo(-r * 0.9, i * r * 0.4); g.lineTo(r * 0.9, i * r * 0.4); g.stroke(); }
-  if (fx > 0) { g.globalAlpha = fx; g.strokeStyle = "#fff"; g.lineWidth = 4 * dpr; g.beginPath(); g.arc(0, 0, r + (1 - fx) * 30 * dpr, 0, Math.PI * 2); g.stroke(); g.globalAlpha = 1; }
+  const rw = R * 1.05, rh = R * 1.28, active = fist;
+  // handle + grip below the head (bug-zapper racket)
+  g.strokeStyle = "#2a2420"; g.lineWidth = 11 * dpr; g.lineCap = "round"; g.beginPath(); g.moveTo(0, rh * 0.92); g.lineTo(0, rh * 0.92 + R * 1.2); g.stroke();
+  g.strokeStyle = active ? "#ff6a6a" : "#ffd23f"; g.lineWidth = 6 * dpr; g.beginPath(); g.moveTo(0, rh * 0.96); g.lineTo(0, rh * 0.96 + R * 1.1); g.stroke();
+  g.fillStyle = "#2a2420"; g.beginPath(); g.ellipse(0, rh * 0.9, 8 * dpr, 5 * dpr, 0, 0, Math.PI * 2); g.fill();   // neck joint
+  // oval head: mesh inside a frame
+  g.save(); g.beginPath(); g.ellipse(0, 0, rw - 4 * dpr, rh - 4 * dpr, 0, 0, Math.PI * 2); g.clip();
+  g.fillStyle = active ? "rgba(255,120,120,0.22)" : "rgba(106,209,255,0.12)"; g.fillRect(-rw, -rh, rw * 2, rh * 2);
+  g.strokeStyle = active ? "rgba(255,150,150,0.6)" : "rgba(160,195,235,0.4)"; g.lineWidth = 1.2 * dpr;
+  for (let gx = -rw; gx <= rw; gx += R * 0.22) { g.beginPath(); g.moveTo(gx, -rh); g.lineTo(gx, rh); g.stroke(); }
+  for (let gy = -rh; gy <= rh; gy += R * 0.22) { g.beginPath(); g.moveTo(-rw, gy); g.lineTo(rw, gy); g.stroke(); }
+  g.restore();
+  g.strokeStyle = active ? "#ff6a6a" : "#3a4150"; g.lineWidth = 8 * dpr; g.beginPath(); g.ellipse(0, 0, rw, rh, 0, 0, Math.PI * 2); g.stroke();   // frame
+  if (fx > 0) { g.globalAlpha = fx; g.strokeStyle = "#fff"; g.lineWidth = 4 * dpr; g.beginPath(); g.ellipse(0, 0, rw + (1 - fx) * 22 * dpr, rh + (1 - fx) * 22 * dpr, 0, 0, Math.PI * 2); g.stroke(); g.globalAlpha = 1; }
   g.restore();
 }
 function drawBug(g, b, t, dpr) {
