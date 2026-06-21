@@ -135,9 +135,23 @@ body::before {
 .ip-body { font-size: 12px; color: var(--muted); line-height: 1.55; }
 .ip-body b { color: var(--text); }
 
-.sidebar-foot { font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+.sidebar-foot { font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; display: flex; flex-direction: column; gap: 12px; }
 .dot-status::before { content: "●"; color: #555; margin-right: 6px; }
 .dot-status.live::before { color: var(--accent); }
+
+/* crafted-by credit + social links */
+.credit { display: flex; flex-direction: column; gap: 9px; }
+.credit-by { font-size: 12px; color: var(--muted); letter-spacing: .2px; }
+.credit-by b { color: var(--accent); font-weight: 700; }
+.socials { display: flex; gap: 8px; }
+.socials a {
+  width: 30px; height: 30px; flex: none; border-radius: 9px;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid var(--line); color: var(--muted);
+  transition: color .15s, background .15s, border-color .15s, transform .12s;
+}
+.socials a svg { width: 15px; height: 15px; display: block; }
+.socials a:hover { color: #1a1400; background: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
 
 /* ---------- Stage ---------- */
 #stage {
@@ -222,6 +236,15 @@ body::before {
   #sidebar { max-height: none; overflow: visible; backdrop-filter: none; -webkit-backdrop-filter: none; padding: 12px 14px; }
   #menu-btn { display: grid; place-items: center; position: relative; z-index: 100; }
   .sidebar-foot { display: none; }
+  /* show the crafted-by credit pinned at the bottom of the games menu when it's open */
+  #app.menu-open .sidebar-foot {
+    display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 106;
+    flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 13px 18px calc(13px + env(safe-area-inset-bottom, 0px));
+    background: rgba(6, 6, 8, 0.98); border-top: 1px solid var(--line); padding-top: 13px;
+  }
+  #app.menu-open .sidebar-foot #cam-status { display: none; }
+  #app.menu-open .credit { flex: 1; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
   /* experiences as a full-screen menu */
   #experience-list {
     position: fixed; inset: 0; z-index: 105; margin: 0;   /* above the notice (100) so it fully covers it when open */
