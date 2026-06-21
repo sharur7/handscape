@@ -62,8 +62,18 @@ export class HandTracker {
     });
     this.video.srcObject = stream;
     await this.video.play();
+    // if the user revokes permission / unplugs the cam, the track ends: mark not-live
+    const track = stream.getVideoTracks()[0];
+    if (track) track.addEventListener("ended", () => { this.running = false; this.onStatus("ended"); });
     this.running = true;
     this.onStatus("live");
+  }
+
+  // true only when a camera track is actually streaming (not just "was started once")
+  isLive() {
+    if (!this.running) return false;
+    const t = this.video?.srcObject?.getVideoTracks?.()[0];
+    return !!t && t.readyState === "live";
   }
 
   stop() {
@@ -170,7 +180,7 @@ export class HandTracker {
 
   // The <video> uses object-fit:contain, which fits the whole frame inside the
   // panel (letterboxed). Landmarks are normalized to the full frame, so we apply
-  // the same contain transform here — otherwise the skeleton drifts off the hand.
+  // the same contain transform here, otherwise the skeleton drifts off the hand.
   _fitMap() {
     const cw = this.overlay.width, ch = this.overlay.height;
     const vw = this.video.videoWidth || 16, vh = this.video.videoHeight || 9;

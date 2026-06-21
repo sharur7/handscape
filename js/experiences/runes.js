@@ -1,7 +1,7 @@
 // Magic Runes experience.
 // PINCH and draw a shape in the air, then release to cast:
 //   ○ circle  -> star shield      △ triangle -> fireball
-//   ⚡ zigzag  -> lightning        — line/slash -> slash wave
+//   ⚡ zigzag  -> lightning       , line/slash -> slash wave
 // Shape is recognised with lightweight stroke heuristics.
 import { sfx } from "../sfx.js";
 
@@ -15,7 +15,7 @@ export function createRunes(ctx) {
   let stroke = [], drawing = false, pen = null;
   let effects = [], label = "", labelT = 0;
 
-  ctx.setHint("<b>Pinch</b> and draw: ○ circle · △ triangle · ⚡ zigzag · — line. Release to cast!");
+  ctx.setHint("<b>Pinch</b> and draw: ○ circle · △ triangle · ⚡ zigzag ·, line. Release to cast!");
 
   function fit() {
     const w = mount.clientWidth, h = mount.clientHeight, dpr = Math.min(devicePixelRatio, 2);

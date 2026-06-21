@@ -1,6 +1,6 @@
 // Color Splash experience.
 // A stencil sits on the paper. Move your hands to fling paint and PINCH for a big
-// splash — paint only fills inside the stencil. Beat the timer, then the stencil
+// splash, paint only fills inside the stencil. Beat the timer, then the stencil
 // lifts to reveal your artwork: "Wow!". Open palm for a new one.
 import { sfx } from "../sfx.js";
 
@@ -18,7 +18,7 @@ export function createColorSplash(ctx) {
   function reset() { blobs = []; shape = SHAPES[(Math.random() * SHAPES.length) | 0]; timeLeft = ROUND; state = "ready"; wowT = 0; }
   function startGame() { blobs = []; shape = SHAPES[(Math.random() * SHAPES.length) | 0]; timeLeft = ROUND; state = "play"; wowT = 0; }
   reset();
-  ctx.setHint("Splash paint inside the stencil — move to streak, <b>pinch</b> for a big splash. Beat the clock!");
+  ctx.setHint("Splash paint inside the stencil, move to streak, <b>pinch</b> for a big splash. Beat the clock!");
 
   function fit() { const w = mount.clientWidth, h = mount.clientHeight, dpr = Math.min(devicePixelRatio, 2); if (screen.width !== (w * dpr | 0) || screen.height !== (h * dpr | 0)) { screen.width = w * dpr | 0; screen.height = h * dpr | 0; } }
   function addBlob(x, y, r, c) { blobs.push({ x, y, r, c }); if (blobs.length > 3500) blobs.shift(); }
@@ -97,7 +97,7 @@ function stencilPath(g, type, cx, cy, s) {
     g.moveTo(cx, cy - s); g.lineTo(cx + s * 0.78, cy); g.lineTo(cx, cy + s); g.lineTo(cx - s * 0.78, cy); g.closePath();
   } else if (type === "triangle") {
     g.moveTo(cx, cy - s); g.lineTo(cx + s * 0.92, cy + s * 0.7); g.lineTo(cx - s * 0.92, cy + s * 0.7); g.closePath();
-  } else { // flower — 6 round petals around a centre, single smooth path per petal
+  } else { // flower, 6 round petals around a centre, single smooth path per petal
     for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2; const px = cx + Math.cos(a) * s * 0.6, py = cy + Math.sin(a) * s * 0.6; g.moveTo(px + s * 0.42, py); g.arc(px, py, s * 0.42, 0, Math.PI * 2); }
     g.moveTo(cx + s * 0.42, cy); g.arc(cx, cy, s * 0.42, 0, Math.PI * 2);
   }

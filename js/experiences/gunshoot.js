@@ -13,7 +13,7 @@ export function createGunShoot(ctx) {
   const g = screen.getContext("2d");
 
   let cans = [], bullets = [], chips = [], score = 0, flash = 0, cool = 0, prevPinch = false, respawnT = 0, gunY = 0.5;
-  ctx.setHint("Move your hand <b>up/down</b> to aim and <b>pinch</b> to fire — knock the tins off the shelves!");
+  ctx.setHint("Move your hand <b>up/down</b> to aim and <b>pinch</b> to fire, knock the tins off the shelves!");
 
   function fit() { const w = mount.clientWidth, h = mount.clientHeight, dpr = Math.min(devicePixelRatio, 2); if (screen.width !== (w * dpr | 0) || screen.height !== (h * dpr | 0)) { screen.width = w * dpr | 0; screen.height = h * dpr | 0; } }
   function spawnCans(W, H) { cans = []; const cw = 0.05 * H; for (const sf of SHELVES) for (let i = 0; i < 3; i++) cans.push({ x: (0.12 + i * 0.1) * W, y: sf * H, w: cw, h: cw * 1.5, vx: 0, vy: 0, rot: 0, down: false }); }

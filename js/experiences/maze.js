@@ -10,11 +10,11 @@ const border = (gapLo, gapHi) => [
 ];
 
 const LEVELS = [
-  // 1) serpentine — roll down through alternating gaps; ends bottom-left into a WIDE exit
+  // 1) serpentine, roll down through alternating gaps; ends bottom-left into a WIDE exit
   //    that sits right where the ball lands (no dead-end pocket, no far-off chute)
   { type: "rect", start: { x: 0.12, y: 0.1 }, gap: [0, 0.3], walls: [...border(0, 0.3),
     { x: 0, y: 0.24, w: 0.78, h: TH }, { x: 0.22, y: 0.42, w: 0.78, h: TH }, { x: 0, y: 0.6, w: 0.78, h: TH }, { x: 0.22, y: 0.78, w: 0.78, h: TH }] },
-  // 2) circular — start in the centre, thread out through 4 rings; gaps alternate sides
+  // 2) circular, start in the centre, thread out through 4 rings; gaps alternate sides
   //    and are narrower, so you have to keep rotating back and forth to line each one up
   { type: "circle", start: { x: 0.5, y: 0.5 }, escapeR: 0.49, ht: 0.018,
     rings: [
@@ -36,7 +36,7 @@ export function createMaze(ctx) {
 
   let level, ball, angle, state, banner;
   function load(i) { const L = LEVELS[i]; ball = { x: L.start.x, y: L.start.y, vx: 0, vy: 0, r: 0.026 }; banner = 1.5; }
-  const PLAY_HINT = "<b>Tilt your hand</b> to rotate the maze and roll the marble out. 2 mazes — a serpentine, then a circular one!";
+  const PLAY_HINT = "<b>Tilt your hand</b> to rotate the maze and roll the marble out. 2 mazes, a serpentine, then a circular one!";
   function reset() { level = 0; angle = 0; state = "play"; load(0); ctx.setHint(PLAY_HINT); }
   reset();
 
@@ -50,7 +50,7 @@ export function createMaze(ctx) {
     if (banner > 0) banner -= dt;
 
     const hand = frame.hands[0];
-    // gentle, controllable tilt — small, clamped, smoothly followed (no slamming to the edge)
+    // gentle, controllable tilt, small, clamped, smoothly followed (no slamming to the edge)
     const targetA = hand ? Math.max(-1.7, Math.min(1.7, (hand.rotation + Math.PI / 2) * 2.0)) : 0;
     angle += (targetA - angle) * Math.min(1, dt * 8);
 

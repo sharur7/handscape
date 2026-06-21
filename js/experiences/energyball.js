@@ -1,5 +1,5 @@
 // Energy Ball experience.
-// Hold BOTH hands up to charge a glowing orb between your palms — hold longer / wider
+// Hold BOTH hands up to charge a glowing orb between your palms, hold longer / wider
 // to grow it. THRUST both hands quickly in a direction to launch it as a blast.
 // One hand makes a small orb that follows you.
 

@@ -1,6 +1,6 @@
 // Bloom Garden experience.
 // PINCH with your RIGHT hand to sow a seed wherever you pinch. PINCH with your LEFT
-// hand to grow every seed a stage — sprout, stem, then a blooming flower.
+// hand to grow every seed a stage, sprout, stem, then a blooming flower.
 import { sfx } from "../sfx.js";
 
 const PALETTE = ["#ff5a72", "#ffb347", "#ff6ad1", "#b06aff", "#6ad1ff", "#ffd23f", "#54e08a"];
@@ -25,7 +25,7 @@ export function createGrowFlowers(ctx) {
     const hands = frame.hands;
 
     // role is fixed to which hand it actually is: your RIGHT hand always sows, your
-    // LEFT hand always blooms — works with one hand or two. A hand is Right xor Left,
+    // LEFT hand always blooms, works with one hand or two. A hand is Right xor Left,
     // so the same hand can never do both.
     const rightHand = hands.find(h => h.handedness === "Right") || null;
     const leftHand = hands.find(h => h.handedness === "Left") || null;

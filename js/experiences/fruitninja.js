@@ -1,5 +1,5 @@
 // Fruit Ninja experience.
-// Fruit is launched high toward the top — swipe your hand fast through it to slice.
+// Fruit is launched high toward the top, swipe your hand fast through it to slice.
 // Clear 30 fruit to win. Miss 3 fruit OR slice a BOMB and it's game over.
 // Open your palm on the end screen to play again.
 
@@ -93,7 +93,7 @@ export function createFruitNinja(ctx) {
         else sliceFruit(fr, bl.ang);
         break;
       }
-      if (!fr.sliced && fr.y - fr.r > H && fr.vy > 0) { fr.dead = true; if (state === "play" && !fr.bomb) { lives--; if (lives <= 0) { state = "over"; ctx.setHint("Out of lives — hold an <b>open palm</b> to retry."); } } }
+      if (!fr.sliced && fr.y - fr.r > H && fr.vy > 0) { fr.dead = true; if (state === "play" && !fr.bomb) { lives--; if (lives <= 0) { state = "over"; ctx.setHint("Out of lives, hold an <b>open palm</b> to retry."); } } }
     }
     fruits = fruits.filter(fr => !fr.sliced && !fr.dead);
 

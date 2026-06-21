@@ -9,7 +9,7 @@ export function createKaleidoscope(ctx) {
   const g = screen.getContext("2d");
   const SEG = 12;
 
-  ctx.setHint("Move in front of the camera — your reflection becomes a living kaleidoscope.");
+  ctx.setHint("Move in front of the camera, your reflection becomes a living kaleidoscope.");
 
   function fit() { const w = mount.clientWidth, h = mount.clientHeight, dpr = Math.min(devicePixelRatio, 2); if (screen.width !== (w * dpr | 0) || screen.height !== (h * dpr | 0)) { screen.width = w * dpr | 0; screen.height = h * dpr | 0; } }
 

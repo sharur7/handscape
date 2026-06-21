@@ -24,7 +24,7 @@ export function createMemorySand(ctx) {
     if (segmenter || loading) return; loading = true; ctx.setTag("loading model…");
     try { const { ImageSegmenter, FilesetResolver } = await import(TASKS_VISION); const fileset = await FilesetResolver.forVisionTasks(TASKS_VISION + "/wasm"); segmenter = await ImageSegmenter.createFromOptions(fileset, { baseOptions: { modelAssetPath: SEG_MODEL, delegate: "GPU" }, runningMode: "VIDEO", outputConfidenceMasks: true, outputCategoryMask: false }); segReady = true; } catch (e) { console.error("segmenter failed", e); ctx.setTag("model failed"); }
   }
-  ctx.setHint("Stand in front of the camera and move — black dust gathers into your silhouette on the white.");
+  ctx.setHint("Stand in front of the camera and move, black dust gathers into your silhouette on the white.");
 
   function inMask(u, v) { if (!mask) return 0; const mx = Math.min(mW - 1, Math.max(0, (1 - u) * mW | 0)), my = Math.min(mH - 1, Math.max(0, v * mH | 0)); return mask[my * mW + mx]; }
   function randInMask() { for (let k = 0; k < 16; k++) { const u = Math.random(), v = Math.random(); if (inMask(u, v) > TH) return [u, v]; } return null; }

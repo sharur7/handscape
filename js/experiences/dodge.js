@@ -1,6 +1,6 @@
 // Dodge experience.
 // Move your hand to steer the orb and DODGE the falling blocks. Survive as long as
-// you can — one hit ends it. Open palm to restart.
+// you can, one hit ends it. Open palm to restart.
 
 import { sfx } from "../sfx.js";
 

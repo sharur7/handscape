@@ -35,7 +35,7 @@
 </head>
 <body>
   <div id="mobile-notice">
-    👋 Best on a <b>desktop/laptop</b> with a webcam — but feel free to look around here.
+    👋 Best on a <b>desktop/laptop</b> with a webcam, but feel free to look around here.
     <button class="mn-close" id="mn-close" aria-label="dismiss">✕</button>
   </div>
   <div id="app">
@@ -88,12 +88,23 @@
       <section id="scene-panel" class="panel">
         <div class="panel-head">
           <span class="panel-title" id="scene-title">Interactive Scene</span>
-          <span class="panel-tag" id="scene-tag">—</span>
-        </div>
-        <div id="scene-mount" class="mount">
-          <div id="scene-cursor" class="hand-cursor"></div>
+          <span class="head-right">
+            <button id="reset-btn" class="reset-btn" title="Restart this game" aria-label="Restart this game">↺ Reset</button>
+            <span class="panel-tag" id="scene-tag">-</span>
+          </span>
         </div>
         <div id="scene-hint" class="overlay-hint"></div>
+        <div id="scene-mount" class="mount">
+          <div id="scene-cursor" class="hand-cursor"></div>
+          <div id="game-overlay" class="game-overlay hidden">
+            <div class="go-card">
+              <div class="go-title" id="go-title">Game</div>
+              <div class="go-body" id="go-instructions"></div>
+              <button id="go-start" class="go-start">▶ Start</button>
+              <div class="go-note" id="go-note"></div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section id="cam-panel" class="panel">

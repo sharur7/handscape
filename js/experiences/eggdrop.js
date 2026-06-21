@@ -14,7 +14,7 @@ export function createEggDrop(ctx) {
   let eggs, bx, score, lives, t, state, spawnT, splats;
   function reset() { eggs = []; bx = 0.5; score = 0; lives = 3; t = 0; state = "play"; spawnT = 0.6; splats = []; }
   reset();
-  ctx.setHint("Slide the <b>basket</b> to catch eggs — but dodge the <b>green rotten ones</b> (−1)!");
+  ctx.setHint("Slide the <b>basket</b> to catch eggs, but dodge the <b>green rotten ones</b> (−1)!");
 
   function fit() { const w = mount.clientWidth, h = mount.clientHeight, dpr = Math.min(devicePixelRatio, 2); if (screen.width !== (w * dpr | 0) || screen.height !== (h * dpr | 0)) { screen.width = w * dpr | 0; screen.height = h * dpr | 0; } }
 
@@ -34,7 +34,7 @@ export function createEggDrop(ctx) {
           if (e.bad) { score = Math.max(0, score - 1); sfx.crack(); }   // caught a rotten one!
           else { score++; sfx.pop(); }
         }
-        else if (!e.done && e.y > H) { e.done = true; if (!e.bad) { lives--; splats.push({ x: e.x, y: H - 6 * dpr, life: 1 }); sfx.crack(); if (lives <= 0) { state = "over"; ctx.setHint("Out of eggs — hold an <b>open palm</b> to retry."); } } }
+        else if (!e.done && e.y > H) { e.done = true; if (!e.bad) { lives--; splats.push({ x: e.x, y: H - 6 * dpr, life: 1 }); sfx.crack(); if (lives <= 0) { state = "over"; ctx.setHint("Out of eggs, hold an <b>open palm</b> to retry."); } } }
       }
       eggs = eggs.filter(e => !e.done);
     }

@@ -128,7 +128,7 @@ export function createLightBulb(ctx) {
           while (d > Math.PI) d -= Math.PI * 2;
           while (d < -Math.PI) d += Math.PI * 2;
           prevRot = cur.rotation;
-          // only real TWISTING counts — ignore tiny jitter / pure up-down hand motion
+          // only real TWISTING counts, ignore tiny jitter / pure up-down hand motion
           if (Math.abs(d) > 0.04) {
             bulbGroup.rotation.y += d;
             insertion = clamp(insertion - Math.abs(d) * REMOVE_GAIN, 0, 1);
@@ -145,7 +145,7 @@ export function createLightBulb(ctx) {
       glassMat.opacity = Math.max(0, glassMat.opacity - dt * 0.04);
       const palm = frame.hands.find(h => h.openness > 0.65 && !h.pinch.active);
       refitOpen = palm ? refitOpen + dt : 0;
-      ctx.setHint("Socket is empty — hold an <b>open palm</b> to fit a fresh bulb.");
+      ctx.setHint("Socket is empty, hold an <b>open palm</b> to fit a fresh bulb.");
       if (posY < -7 && refitOpen > 0.7) {
         posY = 0; vy = 0; insertion = 1; glassMat.opacity = 0.16;
         bulbGroup.rotation.set(0, 0, 0); refitOpen = 0; crashed = false; mode = "refit";

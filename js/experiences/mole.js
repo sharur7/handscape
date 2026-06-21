@@ -1,5 +1,5 @@
 // Whack-a-Mole experience.
-// Moles pop up from the holes — move your hand over one while it's up to bonk it.
+// Moles pop up from the holes, move your hand over one while it's up to bonk it.
 // Score as many as you can in 45 seconds. Open palm to replay.
 
 const ROUND = 45;

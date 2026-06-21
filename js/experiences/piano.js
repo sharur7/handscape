@@ -1,6 +1,6 @@
 // Air Piano experience.
 // A keyboard sits along the bottom. Hover your hand above it, then DIP a fingertip
-// DOWN onto a key to play it — like pressing real keys. Slide across to glissando,
+// DOWN onto a key to play it, like pressing real keys. Slide across to glissando,
 // lift up to stop. Use several fingers / both hands for chords.
 
 const NOTES = [

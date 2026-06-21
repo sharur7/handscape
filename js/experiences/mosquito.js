@@ -16,7 +16,7 @@ export function createMosquito(ctx) {
   function reset() { bugs = []; splats = []; score = 0; timeLeft = ROUND; state = "ready"; spawnT = 0.4; prevFist = false; swatFx = 0; prevPinch = false; }
   function startGame() { bugs = []; splats = []; score = 0; timeLeft = ROUND; spawnT = 0.4; state = "play"; }
   reset();
-  ctx.setHint("A swatter follows your hand — <b>close your fist</b> over a mosquito to smash it!");
+  ctx.setHint("A swatter follows your hand, <b>close your fist</b> over a mosquito to smash it!");
 
   function fit() { const w = mount.clientWidth, h = mount.clientHeight, dpr = Math.min(devicePixelRatio, 2); if (screen.width !== (w * dpr | 0) || screen.height !== (h * dpr | 0)) { screen.width = w * dpr | 0; screen.height = h * dpr | 0; } }
   function spawn(W, H) { bugs.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.5 * W, vy: (Math.random() - 0.5) * 0.5 * H, ph: Math.random() * 10 }); }

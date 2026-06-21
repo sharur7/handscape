@@ -1,6 +1,6 @@
 // Balloon experience.
 // PUCKER your lips to blow air in (the balloon grows). Stop and it slowly leaks air.
-// PINCH to tie it off — tie it in the green "sweet spot" for a bonus, and it floats
+// PINCH to tie it off, tie it in the green "sweet spot" for a bonus, and it floats
 // away. Blow too much and it POPS. Uses FaceLandmarker (mouthPucker / mouthFunnel).
 
 const TASKS_VISION = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18";
@@ -24,7 +24,7 @@ export function createBalloon(ctx) {
   }
 
   let size = 0.12, ci = 0, score = 0, pops = 0, lastPinch = false, leaking = false, frags = [], floaters = [];
-  ctx.setHint("<b>Pucker</b> to blow it up · <b>pinch</b> to tie it (aim for the green band!) — don't pop it.");
+  ctx.setHint("<b>Pucker</b> to blow it up · <b>pinch</b> to tie it (aim for the green band!), don't pop it.");
 
   function fit() { const w = mount.clientWidth, h = mount.clientHeight, dpr = Math.min(devicePixelRatio, 2); if (screen.width !== (w * dpr | 0) || screen.height !== (h * dpr | 0)) { screen.width = w * dpr | 0; screen.height = h * dpr | 0; } }
 

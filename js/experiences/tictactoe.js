@@ -1,6 +1,6 @@
-// Tic-Tac-Toe experience — two players, pass-and-play with gestures.
+// Tic-Tac-Toe experience, two players, pass-and-play with gestures.
 // Take turns: hover a cell and PINCH to drop your mark. X (blue) goes first,
-// then O (orange) — bring a friend and share the camera. Open palm to reset.
+// then O (orange), bring a friend and share the camera. Open palm to reset.
 
 const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
@@ -64,9 +64,9 @@ export function createTicTacToe(ctx) {
 
     // turn / result banner
     g.textAlign = "center"; g.font = `bold ${20 * dpr}px Segoe UI, sans-serif`;
-    if (!winner) { g.fillStyle = turn === 1 ? "#6ad1ff" : "#ffb347"; g.fillText((turn === 1 ? "X" : "O") + " — your turn", W / 2, 26 * dpr); }
-    else if (winner === 3) { g.fillStyle = "#e8edf6"; g.fillText("Draw — open palm to replay", W / 2, 26 * dpr); }
-    else { g.fillStyle = winner === 1 ? "#6ad1ff" : "#ffb347"; g.fillText((winner === 1 ? "X" : "O") + " wins! — open palm to replay", W / 2, 26 * dpr); }
+    if (!winner) { g.fillStyle = turn === 1 ? "#6ad1ff" : "#ffb347"; g.fillText((turn === 1 ? "X" : "O") + ", your turn", W / 2, 26 * dpr); }
+    else if (winner === 3) { g.fillStyle = "#e8edf6"; g.fillText("Draw, open palm to replay", W / 2, 26 * dpr); }
+    else { g.fillStyle = winner === 1 ? "#6ad1ff" : "#ffb347"; g.fillText((winner === 1 ? "X" : "O") + " wins!, open palm to replay", W / 2, 26 * dpr); }
 
     // grid
     g.strokeStyle = "#2a3242"; g.lineWidth = 4 * dpr;

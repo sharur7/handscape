@@ -1,7 +1,7 @@
 // Fishing experience.
 // A hook hangs in the tank and slowly sinks. Move your hand to position it; when a
 // fish touches the hook it's caught on. Then CIRCLE YOUR PALM (wind the reel) to pull
-// the line up — land the fish at the top to score.
+// the line up, land the fish at the top to score.
 import { sfx } from "../sfx.js";
 
 const FISHC = ["#ff8c42", "#6ad1ff", "#54e08a", "#ffd23f", "#ff6ad1"];

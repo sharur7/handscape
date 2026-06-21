@@ -13,6 +13,12 @@ const camStatus  = document.getElementById("cam-status");
 const video      = document.getElementById("cam-video");
 const overlay    = document.getElementById("cam-overlay");
 const enableBtn  = document.getElementById("enable-cam");
+const gameOverlay= document.getElementById("game-overlay");
+const goTitle    = document.getElementById("go-title");
+const goBody     = document.getElementById("go-instructions");
+const goStart    = document.getElementById("go-start");
+const goNote     = document.getElementById("go-note");
+const resetBtn   = document.getElementById("reset-btn");
 
 // ---------- experience context ----------
 const ctx = {
@@ -27,6 +33,8 @@ const ctx = {
 
 let active = null;      // active experience instance
 let activeId = null;
+let activeExp = null;   // active experience definition (for restart)
+let phase = "intro";    // "intro" (start screen, paused) | "playing"
 
 // ---------- sidebar ----------
 function buildSidebar() {
@@ -78,15 +86,59 @@ function selectExperience(id) {
   if (active?.dispose) active.dispose();
   active = exp.create(ctx);
   activeId = id;
+  activeExp = exp;
   sceneTitle.textContent = exp.name;
-  sceneTag.textContent = "—";
+  sceneTag.textContent = "-";
   active.resize(ctx.width, ctx.height);
 
   document.querySelectorAll(".exp-card").forEach(c =>
     c.classList.toggle("active", c.dataset.id === id));
 
-  closeMenu();   // on mobile, picking a game closes the menu
+  closeMenu();    // on mobile, picking a game closes the menu
+  showIntro(exp); // show the Start / how-to screen (paused until Start)
 }
+
+// ---------- start screen / reset / camera gate ----------
+function showIntro(exp) {
+  phase = "intro";
+  goTitle.innerHTML = `${exp.icon} ${exp.name}`;
+  goBody.innerHTML = exp.info || exp.tag;
+  gameOverlay.classList.remove("hidden");
+  refreshStartBtn();
+}
+function refreshStartBtn() {
+  goStart.dataset.mode = "start";
+  goStart.textContent = "▶ Start";
+  goNote.innerHTML = tracker.isLive() ? "Camera ready." : "Press <b>Start</b> to play (we'll enable your camera).";
+}
+async function startGame() {
+  if (!activeExp) return;
+  // Camera already live: Start plays straight away.
+  if (tracker.isLive()) { phase = "playing"; gameOverlay.classList.add("hidden"); return; }
+  // Camera off: first press of Start turns into an explicit "Enable camera" step.
+  if (goStart.dataset.mode !== "enable") {
+    goStart.dataset.mode = "enable";
+    goStart.textContent = "📷 Enable camera";
+    goNote.innerHTML = "Tap to turn on your <b>webcam</b>, then the game starts.";
+    return;
+  }
+  // Second press: enable the camera, then start automatically once it's live.
+  goStart.disabled = true; goNote.innerHTML = "Turning on the camera…";
+  try { await enableCamera(); } catch (e) { console.error(e); }
+  goStart.disabled = false;
+  if (tracker.isLive()) { phase = "playing"; gameOverlay.classList.add("hidden"); }
+  else { goStart.textContent = "📷 Enable camera"; goNote.innerHTML = "Camera access is needed. Allow it in your browser, then tap again."; }
+}
+function resetGame() {
+  if (!activeExp) return;
+  if (active?.dispose) active.dispose();
+  active = activeExp.create(ctx);
+  active.resize(ctx.width, ctx.height);
+  sceneTag.textContent = "-";
+  showIntro(activeExp);   // back to the Start / how-to screen, fresh
+}
+goStart.addEventListener("click", startGame);
+resetBtn.addEventListener("click", resetGame);
 
 // ---------- mobile games menu ----------
 const appEl = document.getElementById("app");
@@ -102,18 +154,29 @@ const tracker = new HandTracker();
 tracker.onStatus = (s) => {
   camStatus.textContent = "camera: " + s;
   camStatus.classList.toggle("live", s === "live");
+  if (s === "live") { enableBtn.classList.add("hidden"); if (phase === "intro") refreshStartBtn(); }
+  if (s === "ended" || s === "error") {
+    enableBtn.classList.remove("hidden"); enableBtn.textContent = "▶ Enable camera"; enableBtn.disabled = false;
+    if (phase === "playing" && activeExp) { showIntro(activeExp); goNote.innerHTML = "Camera turned off. Allow it again to keep playing."; }
+    else if (phase === "intro") refreshStartBtn();
+  }
 };
+
+async function enableCamera() {              // shared by the cam-panel button and the Start button
+  if (tracker.isLive()) return;
+  if (!tracker.landmarker) await tracker.loadModel();
+  await tracker.startCamera(video, overlay);
+}
 
 enableBtn.addEventListener("click", async () => {
   enableBtn.textContent = "starting…";
   enableBtn.disabled = true;
   try {
-    if (!tracker.landmarker) await tracker.loadModel();
-    await tracker.startCamera(video, overlay);
+    await enableCamera();
     enableBtn.classList.add("hidden");
   } catch (err) {
     console.error(err);
-    enableBtn.textContent = "⚠ camera failed — retry";
+    enableBtn.textContent = "⚠ camera failed, retry";
     enableBtn.disabled = false;
     camStatus.textContent = "camera: " + (err?.message || "error");
   }
@@ -155,7 +218,13 @@ function frame(now) {
     ? `${hands.length} hand${hands.length > 1 ? "s" : ""}${cursor.pinch ? " · pinch" : ""}`
     : "no hands";
 
-  if (active?.update) active.update({ hands, cursor, dt, t: now / 1000 });
+  if (phase === "playing") {
+    if (!tracker.isLive()) {                       // camera lost/revoked → pause back to Start
+      if (activeExp) { showIntro(activeExp); goNote.innerHTML = "Camera turned off. Allow it again to keep playing."; }
+    } else if (active?.update) {
+      active.update({ hands, cursor, dt, t: now / 1000 });
+    }
+  }
 
   requestAnimationFrame(frame);
 }
@@ -166,10 +235,10 @@ new ResizeObserver(() => { if (active?.resize) active.resize(ctx.width, ctx.heig
 
 // ---------- boot ----------
 buildSidebar();
-selectExperience("lightbulb");   // show the scene right away (camera optional)
+selectExperience(EXPERIENCES[0].id);   // first game's Start screen (camera gated)
 requestAnimationFrame(frame);
 
-// dismiss the "best on desktop" mobile notice — and reclaim the space it reserved at the top
+// dismiss the "best on desktop" mobile notice, and reclaim the space it reserved at the top
 document.getElementById("mn-close")?.addEventListener("click", () => {
   const n = document.getElementById("mobile-notice"); if (n) n.style.display = "none";
   document.getElementById("app")?.classList.add("notice-dismissed");

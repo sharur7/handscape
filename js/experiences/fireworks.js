@@ -1,5 +1,5 @@
 // Fireworks experience.
-// PINCH to launch a firework toward where your hand is — it rockets up and bursts
+// PINCH to launch a firework toward where your hand is, it rockets up and bursts
 // into colour. A few also fire on their own for ambience.
 
 const COLORS = ["#ff5a72", "#ffb347", "#54e08a", "#6ad1ff", "#b06aff", "#ffd23f", "#ff6ad1"];
@@ -13,7 +13,7 @@ export function createFireworks(ctx) {
   const g = screen.getContext("2d");
 
   let rockets = [], parts = [], prevPinch = false, autoT = 0;
-  ctx.setHint("<b>Pinch</b> anywhere to launch a firework — it rockets up and bursts into colour!");
+  ctx.setHint("<b>Pinch</b> anywhere to launch a firework, it rockets up and bursts into colour!");
 
   function fit() { const w = mount.clientWidth, h = mount.clientHeight, dpr = Math.min(devicePixelRatio, 2); if (screen.width !== (w * dpr | 0) || screen.height !== (h * dpr | 0)) { screen.width = w * dpr | 0; screen.height = h * dpr | 0; } }
   function launch(tx, ty, W, H) { rockets.push({ x: tx, y: H, tx, ty, vy: -(0.9 + Math.random() * 0.2) * H, c: COLORS[(Math.random() * COLORS.length) | 0] }); sfx.fwhistle(); }

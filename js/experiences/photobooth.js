@@ -130,7 +130,7 @@ export function createPhotoBooth(ctx) {
 }
 
 function mid(a, b, SX, SY) { return { x: (SX(a.x) + SX(b.x)) / 2, y: (SY(a.y) + SY(b.y)) / 2 }; }
-// Harry-Potter style round glasses — thin black frame, clear lenses, centred on each eye
+// Harry-Potter style round glasses, thin black frame, clear lenses, centred on each eye
 function drawGlasses(g, rEye, lEye, d, ang) {
   const r = d * 0.42;
   for (const e of [rEye, lEye]) {

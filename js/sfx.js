@@ -1,4 +1,4 @@
-// Tiny shared sound-effects engine (Web Audio, all synthesized — no asset files).
+// Tiny shared sound-effects engine (Web Audio, all synthesized, no asset files).
 // Call sfx.<name>() on interaction events. AudioContext resumes lazily (after the
 // user has clicked Enable Camera, autoplay is allowed).
 

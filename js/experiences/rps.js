@@ -1,6 +1,6 @@
 // Rock Paper Scissors experience.
 // On "Shoot!" hold up ✊ rock (fist), ✋ paper (open hand) or ✌️ scissors (two fingers).
-// Best the computer — first to read your move when the countdown hits zero.
+// Best the computer, first to read your move when the countdown hits zero.
 import { sfx } from "../sfx.js";
 
 const EMO = { rock: "✊", paper: "✋", scissors: "✌️", none: "✋?" };
@@ -63,7 +63,7 @@ export function createRPS(ctx) {
     }
     if (phase === "count") {
       g.fillStyle = "#fff"; g.font = `bold ${Math.min(120, W / 6)}px Segoe UI`; g.fillText(Math.max(1, Math.ceil(timer)), W / 2, H * 0.52);
-      g.fillStyle = "#8a93a6"; g.font = `${18 * dpr}px Segoe UI`; g.fillText("get ready… you're showing: " + (EMO[live] || "—"), W / 2, H * 0.72);
+      g.fillStyle = "#8a93a6"; g.font = `${18 * dpr}px Segoe UI`; g.fillText("get ready… you're showing: " + (EMO[live] || "-"), W / 2, H * 0.72);
     } else {
       g.fillStyle = "#cfd6e2"; emo(playerMove, W * 0.28); emo(cpuMove, W * 0.72);
       g.fillStyle = "#8a93a6"; g.font = `${16 * dpr}px Segoe UI`; g.fillText("you", W * 0.28, H * 0.62); g.fillText("computer", W * 0.72, H * 0.62);

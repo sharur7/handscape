@@ -1,5 +1,5 @@
 // Stack experience.
-// A block swings from the top. PINCH to drop it onto the tower — it lands trimmed
+// A block swings from the top. PINCH to drop it onto the tower, it lands trimmed
 // to the overlap (classic stack game). Reach the FINISH line to win. Miss the tower
 // completely and it crashes to the ground = game over. Open palm to restart.
 
@@ -22,7 +22,7 @@ export function createStack(ctx) {
   }
   reset();
 
-  ctx.setHint("A block swings up top — <b>pinch</b> to drop it square onto the tower. Reach the line!");
+  ctx.setHint("A block swings up top, <b>pinch</b> to drop it square onto the tower. Reach the line!");
 
   function fit() {
     const w = mount.clientWidth, h = mount.clientHeight;
@@ -58,12 +58,12 @@ export function createStack(ctx) {
       falling.vy += 2.4 * H * dt;
       falling.top += falling.vy * dt;
       if (falling.top + falling.h >= top.top) {
-        // landed at tower height — measure overlap
+        // landed at tower height, measure overlap
         const fl = falling.cx - falling.w / 2, fr = falling.cx + falling.w / 2;
         const tl = top.cx - top.w / 2, tr = top.cx + top.w / 2;
         const ol = Math.max(fl, tl), or = Math.min(fr, tr);
         const ow = or - ol;
-        if (ow <= 2 * dpr) { state = "over"; result = "Missed!"; sfx.boom(); ctx.setHint("Crashed to the ground — hold an <b>open palm</b> to restart."); }
+        if (ow <= 2 * dpr) { state = "over"; result = "Missed!"; sfx.boom(); ctx.setHint("Crashed to the ground, hold an <b>open palm</b> to restart."); }
         else {
           const nb = { cx: (ol + or) / 2, w: ow, top: top.top - falling.h, h: falling.h };
           stack.push(nb); falling = null; sfx.thunk();
